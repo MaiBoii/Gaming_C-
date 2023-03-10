@@ -29,13 +29,13 @@ struct _tagCharacter
     int iNum;
     char iGender; 
     int iAge;
-    int iJob;
+    char iJob[NAME_LENGTH];
 };
 
 int main(){
     _tagCharacter tGuildmemberArr[GUILD_MAX] = {};
     int iGuildmemberCount = 0;
-    int iMemberNum = 1;
+    int iMemberNum = 0;
 
     while(true){
         system("clear");
@@ -46,7 +46,7 @@ int main(){
         cout << "4. 모든 길드원을 조회한다. " << endl;
         cout << "5. 볼 일 없음. ㅅㄱ" << endl;
         cout << "=> ";
-        int iMenu = 0;
+        int iMenu;
         cin >> iMenu;
 
         if(cin.fail())
@@ -77,34 +77,76 @@ int main(){
             cin >> tGuildmemberArr[iMemberNum].iAge;
             cout << "직업 : ";
             cin >> tGuildmemberArr[iMemberNum].iJob;
+
+            ++iMemberNum;
+            ++iGuildmemberCount;
             break;
             
-        case MENU_DELETE:
+        case MENU_DELETE:{
+            system("clear");
+            cout << "============== 길드 추방 ==============" << endl;
+
+            char strDeleteName[NAME_LENGTH] = {};
+
+            cin.ignore(1024, '\n');
+            cout << "추방할 인원을 입력하세요. : ";
+            cin.getline(strDeleteName, NAME_LENGTH);
+
+            for (int i=0; i< iGuildmemberCount; ++i)
+            {
+                if(strcmp(tGuildmemberArr[i].strName, strDeleteName) == 0){
+                    for(int j=i; j < iGuildmemberCount - 1; ++j){
+                        tGuildmemberArr[i] = tGuildmemberArr[i+1];
+                    }
+                    --iGuildmemberCount;
+                    break;
+                }
+            }
+        }
             break;
 
-            
-        case MENU_SEARCH:
-            break;
 
+        case MENU_SEARCH: {
+            system("clear");
+            cout << "============== 찾으시는 분 ==============" << endl;
+
+            char strSearchName[NAME_LENGTH] = {};
+
+            cin.ignore(1024, '\n');
+            cout << "찾으시는 분 이름을 입력하세요. : ";
+            cin.getline(strSearchName, NAME_LENGTH);
+
+            //등록되어 있는 길드원 수만큼 반복하여 탐색
+            for (int i=0; i< iGuildmemberCount; ++i)
+            {
+                if(strcmp(tGuildmemberArr[i].strName, strSearchName) == 0){
+                     cout << "이름 : " << tGuildmemberArr[i].strName << endl;
+                    cout << "성별 : " << tGuildmemberArr[i].iGender << endl;
+                    cout << "직업 : " << tGuildmemberArr[i].iJob << endl;
+                    cout << "나이 : " << tGuildmemberArr[i].iAge << endl;
+                    break;
+                }
+            }
+            break;
+        }
 
         case MENU_OUTPUT:
             system("clear");
             cout << "============== 길드 횐님덜 ==============" << endl;
             for (int i=0; i< iGuildmemberCount; ++i)
             {
-                cout << "이름 : " << tGuildmemberArr[iMemberNum].strName << endl;
-                cout << "성별 : " << tGuildmemberArr[iMemberNum].iGender << endl;
-                cout << "직업 : " << tGuildmemberArr[iMemberNum].iJob << endl;
-                cout << "나이 : " << tGuildmemberArr[iMemberNum].iAge << endl;
+                cout << "이름 : " << tGuildmemberArr[i].strName << endl;
+                cout << "성별 : " << tGuildmemberArr[i].iGender << endl;
+                cout << "직업 : " << tGuildmemberArr[i].iJob << endl;
+                cout << "나이 : " << tGuildmemberArr[i].iAge << endl;
             }
             break;
+
         default:
             cout << "뭐라는거야 적힌대로 답을 하세요." << endl;
             break;
         }
         system("read");
     }
-
-
     return 0;
 }
