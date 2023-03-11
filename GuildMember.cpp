@@ -4,16 +4,6 @@
 
 using namespace std;
 
-enum JOB 
-{
-    warrior = 1,
-    wizard,
-    archer,
-    hunter,
-    thief,
-    king
-};
-
 enum MENU 
 {
     MENU_INSERT = 1,
