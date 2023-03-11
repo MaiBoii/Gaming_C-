@@ -174,6 +174,12 @@ int main() {
                     break;   
             }
 
+    _tagMonster tMonsterArr[MT_BACK - 1] = {}
+
+    strcpy(tMonsterArr[0].strName, "고블린");
+    
+
+
 
     }
 
